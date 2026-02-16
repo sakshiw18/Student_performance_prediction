@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎓 Student Performance Prediction</h1>
+    <p>Fill student background details to predict academic performance.</p>
+
+    <form action="/predict" method="POST">
+
+        <select name="gender">
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </select>
+
+        <select name="race">
+            <option value="0">Group A</option>
+            <option value="1">Group B</option>
+            <option value="2">Group C</option>
+            <option value="3">Group D</option>
+            <option value="4">Group E</option>
+        </select>
+
+        <select name="parent">
+            <option value="0">Bachelor</option>
+            <option value="1">Master</option>
+            <option value="2">High School</option>
+            <option value="3">Associate</option>
+        </select>
+
+        <select name="lunch">
+            <option value="0">Standard</option>
+            <option value="1">Free/Reduced</option>
+        </select>
+
+        <select name="prep">
+            <option value="0">None</option>
+            <option value="1">Completed</option>
+        </select>
+
+        <button type="submit">Predict</button>
+
+    </form>
+
+    <br>
+    <a href="/dashboard">View Dashboard 📊</a>
+
+</div>
+
+</body>
+</html>

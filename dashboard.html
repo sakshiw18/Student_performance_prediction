@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <h1>📊 Advanced Analytics Dashboard</h1>
+
+    <div class="stats">
+        <div class="card">
+            Total Students
+            <h2 class="counter" data-target="{{ total_students }}">0</h2>
+        </div>
+
+        <div class="card">
+            Avg Math
+            <h2 class="counter" data-target="{{ avg_math }}">0</h2>
+        </div>
+
+        <div class="card">
+            Avg Reading
+            <h2 class="counter" data-target="{{ avg_reading }}">0</h2>
+        </div>
+
+        <div class="card">
+            Avg Writing
+            <h2 class="counter" data-target="{{ avg_writing }}">0</h2>
+        </div>
+    </div>
+
+    <div class="charts">
+        <canvas id="barChart"></canvas>
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <br>
+    <a href="/">⬅ Back to Prediction</a>
+
+</div>
+
+<script>
+    // Animated Counters
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const update = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / 100;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(update, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        update();
+    });
+
+    // Bar Chart
+    new Chart(document.getElementById("barChart"), {
+        type: 'bar',
+        data: {
+            labels: ["Math", "Reading", "Writing"],
+            datasets: [{
+                label: "Average Scores",
+                data: [{{ avg_math }}, {{ avg_reading }}, {{ avg_writing }}],
+                backgroundColor: ["#4e73df", "#1cc88a", "#f6c23e"]
+            }]
+        }
+    });
+
+    // Line Chart
+    new Chart(document.getElementById("lineChart"), {
+        type: 'line',
+        data: {
+            labels: ["Math", "Reading", "Writing"],
+            datasets: [{
+                label: "Trend",
+                data: [{{ avg_math }}, {{ avg_reading }}, {{ avg_writing }}],
+                borderColor: "#36b9cc",
+                fill: false
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
